@@ -4,9 +4,21 @@ $userGroups = $currentUser->getGroups();
 $siteName = setting('App.siteName') ?? 'Gentelella';
 $currentUrl = uri_string();
 $isCurrent = static fn (string $path): bool => $currentUrl === $path || str_starts_with($currentUrl, $path . '/');
+$themePrimary = setting('App.themePrimary') ?? '#1ABB9C';
+$themePrimary = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $themePrimary) ? $themePrimary : '#1ABB9C';
+$themeSidebar = setting('App.themeSidebar') ?? 'dark';
+$themeSidebar = in_array($themeSidebar, ['dark', 'black', 'light', 'brand'], true) ? $themeSidebar : 'dark';
+$themeRadius = (int) (setting('App.themeRadius') ?? 6);
+$themeRadius = max(0, min(16, $themeRadius));
+$themeSidebarWidth = (int) (setting('App.themeSidebarWidth') ?? 252);
+$themeSidebarWidth = max(200, min(320, $themeSidebarWidth));
+$themeFontSize = (float) (setting('App.themeFontSize') ?? 14);
+$themeFontSize = max(13, min(16, $themeFontSize));
+$themeMode = setting('App.themeMode') ?? 'system';
+$themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMode : 'system';
 ?>
 <!doctype html>
-<html lang="id">
+<html lang="id" data-sidebar-style="<?= esc($themeSidebar, 'attr') ?>">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +29,8 @@ $isCurrent = static fn (string $path): bool => $currentUrl === $path || str_star
       try {
         var theme = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme', theme || (prefersDark ? 'dark' : 'light'));
+        var defaultMode = <?= json_encode($themeMode) ?>;
+        document.documentElement.setAttribute('data-theme', theme || (defaultMode === 'system' ? (prefersDark ? 'dark' : 'light') : defaultMode));
       } catch (error) {}
     })();
   </script>
@@ -27,6 +40,19 @@ $isCurrent = static fn (string $path): bool => $currentUrl === $path || str_star
   <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
   <link rel="stylesheet" href="<?= base_url('gentelella/assets/main-v4-DB_ReeJG.css') ?>">
   <link rel="stylesheet" href="<?= base_url('gentelella/assets/dashboard-app.css') ?>">
+  <style>
+    :root {
+      --primary: <?= esc($themePrimary) ?>;
+      --primary-dk: color-mix(in srgb, var(--primary) 80%, black);
+      --primary-lt: color-mix(in srgb, var(--primary) 10%, transparent);
+      --radius: <?= $themeRadius ?>px;
+      --radius-sm: <?= max(0, $themeRadius - 2) ?>px;
+      --radius-lg: <?= $themeRadius + 2 ?>px;
+      --sidebar-w: <?= $themeSidebarWidth ?>px;
+      --font-size: <?= $themeFontSize / 16 ?>rem;
+    }
+    :root[data-theme="dark"] { --primary-lt: color-mix(in srgb, var(--primary) 14%, transparent); }
+  </style>
 </head>
 <body data-shell="admin" data-page="<?= esc($currentUrl === '' ? 'dashboard' : str_replace('/', '-', $currentUrl), 'attr') ?>" data-breadcrumb="Home > <?= esc($page_title ?? 'Dashboard', 'attr') ?>">
   <a class="skip-link" href="#main-content">Langsung ke konten</a>

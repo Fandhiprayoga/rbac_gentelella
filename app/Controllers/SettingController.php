@@ -29,6 +29,12 @@ class SettingController extends BaseController
         'Mail.fromName'       => 'CI4 RBAC',
         'App.authAsideStart'  => '#2f3f63',
         'App.authAsideEnd'    => '#1b2338',
+        'App.themePrimary'    => '#1ABB9C',
+        'App.themeSidebar'    => 'dark',
+        'App.themeRadius'     => '6',
+        'App.themeSidebarWidth' => '252',
+        'App.themeFontSize'   => '14',
+        'App.themeMode'       => 'system',
     ];
 
     /**
@@ -287,6 +293,12 @@ class SettingController extends BaseController
         $rules = [
             'auth_aside_start' => 'required|max_length[7]|regex_match[/^#[0-9A-Fa-f]{6}$/]',
             'auth_aside_end'   => 'required|max_length[7]|regex_match[/^#[0-9A-Fa-f]{6}$/]',
+            'theme_primary'    => 'required|regex_match[/^#[0-9A-Fa-f]{6}$/]',
+            'theme_sidebar'    => 'required|in_list[dark,black,light,brand]',
+            'theme_radius'     => 'required|integer|greater_than_equal_to[0]|less_than_equal_to[16]',
+            'theme_sidebar_width' => 'required|integer|greater_than_equal_to[200]|less_than_equal_to[320]',
+            'theme_font_size'  => 'required|in_list[13,13.5,14,14.5,15,15.5,16]',
+            'theme_mode'       => 'required|in_list[system,light,dark]',
         ];
 
         if (! $this->validate($rules)) {
@@ -295,6 +307,12 @@ class SettingController extends BaseController
 
         setting('App.authAsideStart', $this->request->getPost('auth_aside_start'));
         setting('App.authAsideEnd', $this->request->getPost('auth_aside_end'));
+        setting('App.themePrimary', $this->request->getPost('theme_primary'));
+        setting('App.themeSidebar', $this->request->getPost('theme_sidebar'));
+        setting('App.themeRadius', $this->request->getPost('theme_radius'));
+        setting('App.themeSidebarWidth', $this->request->getPost('theme_sidebar_width'));
+        setting('App.themeFontSize', $this->request->getPost('theme_font_size'));
+        setting('App.themeMode', $this->request->getPost('theme_mode'));
 
         return redirect()->to('/admin/settings?tab=appearance')->with('success', 'Pengaturan tampilan berhasil diperbarui.');
     }
@@ -311,7 +329,7 @@ class SettingController extends BaseController
             'general' => ['App.siteName', 'App.siteNameShort', 'App.siteDescription', 'App.siteFooter', 'App.siteVersion', 'App.siteLogo', 'App.siteFavicon'],
             'auth'    => ['App.defaultRole', 'Auth.allowRegistration', 'App.maintenanceMode', 'App.maintenanceMsg'],
             'mail'       => ['Mail.protocol', 'Mail.hostname', 'Mail.port', 'Mail.username', 'Mail.password', 'Mail.encryption', 'Mail.fromEmail', 'Mail.fromName', 'Email.protocol', 'Email.SMTPHost', 'Email.SMTPPort', 'Email.SMTPUser', 'Email.SMTPPass', 'Email.SMTPCrypto', 'Email.fromEmail', 'Email.fromName'],
-            'appearance' => ['App.authAsideStart', 'App.authAsideEnd'],
+            'appearance' => ['App.authAsideStart', 'App.authAsideEnd', 'App.themePrimary', 'App.themeSidebar', 'App.themeRadius', 'App.themeSidebarWidth', 'App.themeFontSize', 'App.themeMode'],
             default      => array_keys($this->defaults),
         };
 

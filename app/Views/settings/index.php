@@ -158,13 +158,97 @@ $s = function (string $key) use ($settings) {
         <div class="tabs__panel" data-value="appearance" data-state="<?= $activeTab === 'appearance' ? 'active' : 'inactive' ?>">
           <div class="flex flex-col gap-6">
             <section>
-              <form action="<?= base_url('admin/settings/update/appearance') ?>" method="post">
+              <form id="theme-settings" action="<?= base_url('admin/settings/update/appearance') ?>" method="post">
                 <?= csrf_field() ?>
+                <div class="theme-settings-layout">
+                  <div class="theme-settings-controls">
+                    <div class="card">
+                      <div class="card-header"><div class="card-title">Warna utama</div></div>
+                      <div class="card-body">
+                        <div class="theme-settings-swatches" aria-label="Pilih warna utama">
+                          <?php foreach (['#1ABB9C' => 'Teal', '#066fd1' => 'Biru', '#4263eb' => 'Indigo', '#ae3ec9' => 'Ungu', '#d6336c' => 'Merah muda', '#d63939' => 'Merah', '#f76707' => 'Oranye', '#f59f00' => 'Kuning', '#2fb344' => 'Hijau', '#17a2b8' => 'Sian', '#0f1623' => 'Hitam'] as $color => $label): ?>
+                            <button type="button" class="theme-settings-swatch" data-theme-color="<?= $color ?>" style="background:<?= $color ?>" title="<?= $label ?>" aria-label="<?= $label ?>" aria-pressed="false"></button>
+                          <?php endforeach; ?>
+                        </div>
+                        <div class="form-group" style="margin:14px 0 0">
+                          <label class="form-label" for="theme_primary">Warna kustom</label>
+                          <div class="theme-settings-color-input">
+                            <input type="color" id="theme_primary_picker" value="<?= esc(old('theme_primary', $s('App.themePrimary')), 'attr') ?>" aria-label="Pilih warna kustom">
+                            <input type="text" id="theme_primary" name="theme_primary" class="form-control" value="<?= esc(old('theme_primary', $s('App.themePrimary')), 'attr') ?>" pattern="^#[0-9A-Fa-f]{6}$" maxlength="7" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header"><div class="card-title">Sidebar</div></div>
+                      <div class="card-body">
+                        <div class="segmented theme-settings-options" role="radiogroup" aria-label="Gaya sidebar">
+                          <?php foreach (['dark' => 'Gelap', 'black' => 'Hitam', 'light' => 'Terang', 'brand' => 'Brand'] as $value => $label): ?>
+                            <label><input type="radio" name="theme_sidebar" value="<?= $value ?>" <?= old('theme_sidebar', $s('App.themeSidebar')) === $value ? 'checked' : '' ?>><span><?= $label ?></span></label>
+                          <?php endforeach; ?>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header"><div class="card-title">Geometri</div></div>
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label class="form-label" for="theme_radius">Radius sudut <output for="theme_radius" id="theme_radius_value"></output></label>
+                          <input class="slider" type="range" id="theme_radius" name="theme_radius" min="0" max="16" step="1" value="<?= esc(old('theme_radius', $s('App.themeRadius')), 'attr') ?>">
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" for="theme_sidebar_width">Lebar sidebar <output for="theme_sidebar_width" id="theme_sidebar_width_value"></output></label>
+                          <input class="slider" type="range" id="theme_sidebar_width" name="theme_sidebar_width" min="200" max="320" step="4" value="<?= esc(old('theme_sidebar_width', $s('App.themeSidebarWidth')), 'attr') ?>">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0">
+                          <label class="form-label" for="theme_font_size">Ukuran teks <output for="theme_font_size" id="theme_font_size_value"></output></label>
+                          <input class="slider" type="range" id="theme_font_size" name="theme_font_size" min="13" max="16" step="0.5" value="<?= esc(old('theme_font_size', $s('App.themeFontSize')), 'attr') ?>">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header"><div class="card-title">Mode</div></div>
+                      <div class="card-body">
+                        <div class="segmented theme-settings-options" role="radiogroup" aria-label="Mode tampilan">
+                          <?php foreach (['system' => 'Sistem', 'light' => 'Terang', 'dark' => 'Gelap'] as $value => $label): ?>
+                            <label><input type="radio" name="theme_mode" value="<?= $value ?>" <?= old('theme_mode', $s('App.themeMode')) === $value ? 'checked' : '' ?>><span><?= $label ?></span></label>
+                          <?php endforeach; ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="theme-settings-preview">
+                    <div class="card">
+                      <div class="card-header"><div><div class="card-title">Pratinjau langsung</div><div class="card-subtitle">Perubahan terlihat sebelum disimpan.</div></div></div>
+                      <div class="card-body">
+                        <div class="theme-settings-sample">
+                          <div class="theme-settings-sample-nav">Menu utama<br><span>Dashboard</span><span>Pengaturan</span></div>
+                          <div class="theme-settings-sample-content">
+                            <strong>Tampilan aplikasi</strong>
+                            <p class="form-help">Warna, kontrol, dan bentuk komponen.</p>
+                            <div class="theme-settings-sample-actions"><span class="btn btn-primary">Utama</span><span class="btn btn-outline">Sekunder</span></div>
+                            <div class="form-group" style="margin:16px 0 0"><label class="form-label" for="theme_preview_field">Kolom input</label><input class="form-control" id="theme_preview_field" type="text" value="Contoh teks" readonly></div>
+                            <span class="badge badge-teal" style="margin-top:12px">Aktif</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="theme-settings-actions">
+                      <button type="reset" class="btn btn-outline">Batalkan perubahan</button>
+                      <button type="submit" class="btn btn-primary">Simpan tampilan</button>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="card">
                   <div class="card-header">
                     <div>
-                      <div class="card-title">Warna Tema</div>
-                      <div class="card-subtitle">Kustomisasi dua warna gradient untuk latar auth aside.</div>
+                      <div class="card-title">Latar halaman login</div>
+                      <div class="card-subtitle">Dua warna gradient untuk latar halaman login.</div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -210,21 +294,22 @@ $s = function (string $key) use ($settings) {
                           <div style="font-size:11px; font-weight:600;">Brand</div>
                         </div>
                         <div style="font-size:16px; line-height:1.2; font-weight:300; margin-bottom:8px;">Akses aman,<br>proses lebih tertata.</div>
-                        <div style="font-size:11px; opacity:0.75;">Pratinjau latar gradient untuk area auth aside.</div>
+                        <div style="font-size:11px; opacity:0.75;">Pratinjau latar gradient halaman login.</div>
                       </div>
                     </div>
 
                     <div class="flex justify-end mt-4">
-                      <button type="submit" class="btn btn-primary">Simpan</button>
+                      <button type="submit" class="btn btn-primary">Simpan tampilan</button>
                     </div>
+
                   </div>
                 </div>
               </form>
             </section>
 
             <section>
-              <form action="<?= base_url('admin/settings/reset') ?>" method="post"
-                    onsubmit="return confirm('Reset pengaturan Tampilan ke default?')">
+                <form id="theme-settings-reset" action="<?= base_url('admin/settings/reset') ?>" method="post"
+                  onsubmit="return confirm('Reset pengaturan Tampilan ke default?')">
                 <?= csrf_field() ?>
                 <input type="hidden" name="tab" value="appearance">
                 <button type="submit" class="btn btn-danger btn-sm">Reset ke Default</button>
@@ -632,4 +717,65 @@ $s = function (string $key) use ($settings) {
   });
 
   toggleSmtp();
+</script>
+<script>
+  (function () {
+    var form = document.getElementById('theme-settings');
+    var root = document.documentElement;
+    var primary = document.getElementById('theme_primary');
+    var picker = document.getElementById('theme_primary_picker');
+    var swatches = form.querySelectorAll('[data-theme-color]');
+    var sliders = ['theme_radius', 'theme_sidebar_width', 'theme_font_size'];
+
+    function refreshTheme() {
+      var color = primary.value.trim();
+      if (/^#[0-9a-f]{6}$/i.test(color)) {
+        root.style.setProperty('--primary', color);
+        picker.value = color;
+      }
+      swatches.forEach(function (swatch) {
+        swatch.setAttribute('aria-pressed', String(swatch.dataset.themeColor.toLowerCase() === color.toLowerCase()));
+      });
+      root.dataset.sidebarStyle = form.querySelector('[name="theme_sidebar"]:checked').value;
+      sliders.forEach(function (id) {
+        var slider = document.getElementById(id);
+        document.getElementById(id + '_value').value = slider.value + ' px';
+      });
+      var radius = Number(document.getElementById('theme_radius').value);
+      root.style.setProperty('--radius', radius + 'px');
+      root.style.setProperty('--radius-sm', Math.max(0, radius - 2) + 'px');
+      root.style.setProperty('--radius-lg', radius + 2 + 'px');
+      root.style.setProperty('--sidebar-w', document.getElementById('theme_sidebar_width').value + 'px');
+      root.style.setProperty('--font-size', Number(document.getElementById('theme_font_size').value) / 16 + 'rem');
+      var mode = form.querySelector('[name="theme_mode"]:checked').value;
+      root.dataset.theme = mode === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
+    }
+
+    swatches.forEach(function (swatch) {
+      swatch.addEventListener('click', function () {
+        primary.value = swatch.dataset.themeColor;
+        refreshTheme();
+      });
+    });
+    picker.addEventListener('input', function () { primary.value = picker.value; refreshTheme(); });
+    primary.addEventListener('input', refreshTheme);
+    form.querySelectorAll('input[name^="theme_"]').forEach(function (input) {
+      input.addEventListener('input', refreshTheme);
+      input.addEventListener('change', refreshTheme);
+    });
+    form.addEventListener('reset', function () { requestAnimationFrame(function () { refreshTheme(); updatePreview(); }); });
+    form.addEventListener('submit', function () {
+      var mode = form.querySelector('[name="theme_mode"]:checked').value;
+      try {
+        if (mode === 'system') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', mode);
+      } catch (error) {}
+    });
+    document.getElementById('theme-settings-reset').addEventListener('submit', function (event) {
+      if (!event.defaultPrevented) {
+        try { localStorage.removeItem('theme'); } catch (error) {}
+      }
+    });
+    refreshTheme();
+  })();
 </script>
