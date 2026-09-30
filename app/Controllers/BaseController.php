@@ -40,7 +40,7 @@ abstract class BaseController extends Controller
     /**
      * Render view dengan layout
      */
-    protected function renderView(string $view, array $data = [], string $layout = 'layouts/app'): string
+    protected function renderView(string $view, array $data = [], string $layout = 'layouts/dashboard'): string
     {
         $data['content'] = view($view, $data);
 

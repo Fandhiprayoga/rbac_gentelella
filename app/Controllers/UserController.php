@@ -19,7 +19,40 @@ class UserController extends BaseController
      */
     public function index()
     {
-        $users = $this->userModel->findAll();
+        $perPage = 10;
+        $search  = trim((string) $this->request->getGet('q'));
+        $status  = (string) $this->request->getGet('status');
+        $role    = (string) $this->request->getGet('role');
+
+        $db     = db_connect();
+        $tables = config('Auth')->tables;
+
+        if ($search !== '') {
+            // Email disimpan Shield di tabel identities, bukan di tabel users.
+            $emailIds = $db->table($tables['identities'])
+                ->select('user_id')
+                ->where('type', 'email_password')
+                ->like('secret', $search);
+
+            $this->userModel->groupStart()
+                ->like('users.username', $search)
+                ->orWhereIn('users.id', $emailIds)
+                ->groupEnd();
+        }
+
+        if ($status === 'active' || $status === 'inactive') {
+            $this->userModel->where('users.active', $status === 'active' ? 1 : 0);
+        }
+
+        if ($role !== '') {
+            $roleIds = $db->table($tables['groups_users'])
+                ->select('user_id')
+                ->where('group', $role);
+
+            $this->userModel->whereIn('users.id', $roleIds);
+        }
+
+        $users = $this->userModel->orderBy('users.id', 'ASC')->paginate($perPage);
 
         // Tambahkan info group untuk setiap user
         foreach ($users as $user) {
@@ -27,9 +60,14 @@ class UserController extends BaseController
         }
 
         $data = [
-            'title'      => 'Manajemen User',
-            'page_title' => 'Daftar User',
-            'users'      => $users,
+            'title'         => 'Manajemen User',
+            'page_title'    => 'Daftar User',
+            'page_pretitle' => 'Administrasi',
+            'page_actions'  => view('users/_actions'),
+            'users'         => $users,
+            'pager'         => $this->userModel->pager,
+            'roles'         => config('AuthGroups')->groups,
+            'filters'       => ['q' => $search, 'status' => $status, 'role' => $role],
         ];
 
         return $this->renderView('users/index', $data);

@@ -1,9 +1,12 @@
 <div class="page__section">
   <div class="card" style="max-width: 720px; margin: 0 auto;">
-    <div class="card__header">
-      <span class="card__title">Tambah User Baru</span>
+    <div class="card-header">
+      <div>
+        <div class="card-title">Tambah User Baru</div>
+        <div class="card-subtitle">Lengkapi informasi akun dan tentukan role pengguna.</div>
+      </div>
     </div>
-    <div class="card__body">
+    <div class="card-body">
       <form action="<?= base_url('admin/users/store') ?>" method="post" class="flex flex-col gap-4">
         <?= csrf_field() ?>
 
@@ -46,8 +49,8 @@
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
-          <a href="<?= base_url('admin/users') ?>" class="button button--outline button--neutral">Batal</a>
-          <button type="submit" class="button button--primary">
+          <a href="<?= base_url('admin/users') ?>" class="btn btn-outline">Batal</a>
+          <button type="submit" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M17 21H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h6l7 7v7a4 4 0 0 1-4 4z" />
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M13 3v4a2 2 0 0 0 2 2h4" />

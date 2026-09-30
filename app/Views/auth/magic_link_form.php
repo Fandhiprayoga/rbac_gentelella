@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/auth') ?>
+<?= $this->extend('layouts/auth-gentelella') ?>
 
 <?= $this->section('auth_pitch_title') ?>
 Pulihkan akses <span>secara aman</span> <span>dan efisien.</span>
@@ -11,8 +11,8 @@ Sistem akan mengirim tautan masuk ke email Anda agar proses autentikasi tetap pr
 <?= $this->section('content') ?>
 <div class="auth__form">
   <div>
-    <h1 class="text-2xl">Tautan Masuk</h1>
-    <p class="text-muted-foreground mt-1">Silakan masukkan alamat email untuk menerima tautan masuk.</p>
+    <h1 class="text-2xl">Lupa kata sandi?</h1>
+    <p class="text-muted-foreground mt-1">Masukkan email akun Anda untuk menerima tautan masuk aman. Kata sandi tidak akan diubah.</p>
   </div>
 
   <?php if (session('error') !== null) : ?>
@@ -60,7 +60,7 @@ Sistem akan mengirim tautan masuk ke email Anda agar proses autentikasi tetap pr
     </div>
 
     <button type="submit" class="button button--primary button--block button--lg" tabindex="2">
-      <?= lang('Auth.send') ?>
+      Kirim tautan masuk
       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
         <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 12h16m0 0l-6-6m6 6l-6 6" />
       </svg>

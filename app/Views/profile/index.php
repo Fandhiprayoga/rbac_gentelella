@@ -1,77 +1,56 @@
 <?php $currentUser = auth()->user(); ?>
 
-<div class="page__section">
-  <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-12 lg:col-span-4">
-      <div class="card text-center h-full">
-        <div class="card__body h-full flex flex-col items-center justify-center">
-          <span class="avatar avatar--xl avatar--circle mx-auto mb-3" data-stisla-avatar>
-            <span class="avatar__fallback" style="font-size: 2rem;"><?= esc(strtoupper(substr($currentUser->username, 0, 2))) ?></span>
-          </span>
-          <h5 class="text-lg font-semibold"><?= esc($currentUser->username) ?></h5>
-          <p class="text-muted-foreground"><?= esc($currentUser->email) ?></p>
-          <div class="flex justify-center gap-1 mt-2">
-            <?php foreach ($userGroups as $group): ?>
-              <?php
-                $badgeClass = match($group) {
-                  'superadmin' => 'danger',
-                  'admin'      => 'warning',
-                  'manager'    => 'info',
-                  default      => 'primary',
-                };
-              ?>
-              <span class="badge badge--soft badge--<?= $badgeClass ?>"><?= ucfirst($group) ?></span>
-            <?php endforeach; ?>
+<div class="row col-4-8">
+  <section class="card" aria-label="Ringkasan profil">
+    <div class="card-body" style="text-align:center;padding:24px 16px">
+      <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dk));margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:32px;font-weight:600" aria-hidden="true">
+        <?= esc(strtoupper(substr($currentUser->username, 0, 1))) ?>
+      </div>
+      <div style="font-size:16px;font-weight:600;color:var(--text)"><?= esc($currentUser->username) ?></div>
+      <div style="font-size:12.5px;color:var(--text-muted);margin-top:2px;overflow-wrap:anywhere"><?= esc($currentUser->email) ?></div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
+        <?php foreach ($currentUser->getGroups() as $group): ?>
+          <span class="badge badge-teal"><?= esc(config('AuthGroups')->groups[$group]['title'] ?? ucfirst($group)) ?></span>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="profile-form-title">
+    <div class="card-header">
+      <div>
+        <div class="card-title" id="profile-form-title">Informasi pribadi</div>
+        <div class="card-subtitle">Perbarui username dan keamanan akun Anda.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form action="<?= base_url('profile/update') ?>" method="post">
+        <?= csrf_field() ?>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="username">Username <span class="required">*</span></label>
+            <input type="text" class="form-control" id="username" name="username"
+                   value="<?= esc(old('username', $currentUser->username), 'attr') ?>" minlength="3" maxlength="30" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" class="form-control" id="email" value="<?= esc($currentUser->email, 'attr') ?>" disabled>
+            <div class="form-help">Email tidak dapat diubah.</div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-span-12 lg:col-span-8">
-      <div class="card h-full">
-        <div class="card__header">
-          <span class="card__title">Edit Profil</span>
+        <div class="form-group">
+          <label class="form-label" for="password">Password baru</label>
+          <input type="password" class="form-control" id="password" name="password" autocomplete="new-password" autocapitalize="off" spellcheck="false">
+          <div class="form-help">Kosongkan jika tidak ingin mengubah password.</div>
         </div>
-        <div class="card__body">
-          <form action="<?= base_url('profile/update') ?>" method="post" class="flex flex-col gap-4">
-            <?= csrf_field() ?>
 
-            <div class="field">
-              <label for="username" class="field__label">Username</label>
-              <div class="input-group">
-                <input type="text" class="input" id="username" name="username"
-                       value="<?= old('username', $currentUser->username) ?>" required>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="email" class="field__label">Email</label>
-              <div class="input-group">
-                <input type="email" class="input" id="email" value="<?= esc($currentUser->email) ?>" disabled>
-              </div>
-              <small class="text-muted-foreground text-xs">Email tidak dapat diubah.</small>
-            </div>
-
-            <div class="field">
-              <label for="password" class="field__label">Password Baru</label>
-              <div class="input-group">
-                <input type="password" class="input" id="password" name="password" autocomplete="new-password" autocapitalize="off" spellcheck="false">
-              </div>
-              <small class="text-muted-foreground text-xs">Kosongkan jika tidak ingin mengubah password.</small>
-            </div>
-
-            <div class="flex justify-end pt-2">
-              <button type="submit" class="button button--primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M17 21H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h6l7 7v7a4 4 0 0 1-4 4z" />
-                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M13 3v4a2 2 0 0 0 2 2h4" />
-                </svg>
-                Simpan Perubahan
-              </button>
-            </div>
-          </form>
+        <div class="form-actions right">
+          <button type="reset" class="btn btn-outline">Batalkan</button>
+          <button type="submit" class="btn btn-primary">Simpan perubahan</button>
         </div>
-      </div>
+      </form>
     </div>
-  </div>
+  </section>
 </div>

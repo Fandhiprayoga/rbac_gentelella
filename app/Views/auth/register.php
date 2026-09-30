@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/auth') ?>
+<?= $this->extend('layouts/auth-gentelella') ?>
 
 <?= $this->section('auth_pitch_title') ?>
 Mulai akun <span>baru</span> <span>secara sistematis.</span>

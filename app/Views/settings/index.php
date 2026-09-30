@@ -9,78 +9,33 @@ $s = function (string $key) use ($settings) {
 ?>
 
 <div class="page__section">
-  <div class="grid grid-cols-12 gap-6">
-    <div class="col-span-12 lg:col-span-3">
-      <aside class="sidebar sidebar--setting" aria-label="Settings sections">
-        <div class="sidebar__content">
-          <nav class="sidebar__menu">
-            <div class="sidebar__group">
-              <ul class="sidebar__list">
-                <li class="sidebar__item">
-                  <button type="button" class="sidebar__button" aria-controls="settingsTabs"
-                          data-stisla-tabs-value="general" <?= $activeTab === 'general' ? 'aria-current="page"' : '' ?>>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m9.394 3.001l.306-.001c2.177 0 3.266 0 4.07.465c.284.166.535.384.742.64c.6.741.6 1.809.6 3.944v.083c0 .583 0 .875-.076 1.14c-.152.537-.56.956-1.086 1.112c-.26.077-.546.077-1.116.077h-2.15c-2.686 0-4.028 0-4.862-.844C5.014 8.728 5 7.218 5 4.2c0-.754.564-1.39 1.313-1.39z" opacity=".5" />
-                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m14.606 20.999l-.306.001c-2.177 0-3.266 0-4.07-.465a2.7 2.7 0 0 1-.742-.64C8.888 19.154 8.888 18.086 8.888 15.951v-.083c0-.583 0-.875.076-1.14c.152-.537.56-.956 1.086-1.112c.26-.077.546-.077 1.116-.077h2.15c2.686 0 4.028 0 4.862.844c.834.843.848 2.353.848 5.371c0 .754-.564 1.39-1.313 1.39z" />
-                    </svg><span>Umum</span>
-                  </button>
-                </li>
-                <li class="sidebar__item">
-                  <button type="button" class="sidebar__button" aria-controls="settingsTabs"
-                          data-stisla-tabs-value="appearance" <?= $activeTab === 'appearance' ? 'aria-current="page"' : '' ?>>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-                      <path fill="none" stroke="currentColor" stroke-width="1.5" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10c.987 0 1.75-.763 1.75-1.75v-.377c0-.788.347-1.537.957-2.048c.61-.51 1.428-.741 2.254-.63c1.243.168 2.398-.29 3.16-1.055c1.157-1.159 1.157-3.17 0-4.328a1.97 1.97 0 0 0-1.405-.583H17.5c-.966 0-1.75-.784-1.75-1.75c0-3.167-2.458-5.783-5.556-5.982A7.95 7.95 0 0 0 12 2" />
-                      <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor" />
-                      <circle cx="10" cy="7.5" r="1.5" fill="currentColor" />
-                      <circle cx="14.5" cy="7.5" r="1.5" fill="currentColor" />
-                      <circle cx="17" cy="11.5" r="1.5" fill="currentColor" />
-                    </svg><span>Tampilan</span>
-                  </button>
-                </li>
-                <li class="sidebar__item">
-                  <button type="button" class="sidebar__button" aria-controls="settingsTabs"
-                          data-stisla-tabs-value="auth" <?= $activeTab === 'auth' ? 'aria-current="page"' : '' ?>>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-                      <g fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M3 10.417c0-3.198 0-4.797.378-5.335c.377-.537 1.88-1.052 4.887-2.081l.573-.196C10.405 2.268 11.188 2 12 2s1.595.268 3.162.805l.573.196c3.007 1.029 4.51 1.544 4.887 2.081C21 5.62 21 7.22 21 10.417v1.574c0 5.638-4.239 8.375-6.899 9.536C13.38 21.842 13.02 22 12 22s-1.38-.158-2.101-.473C7.239 20.365 3 17.63 3 11.991z" />
-                        <path stroke-linejoin="round" d="M11.5 16h1a1 1 0 0 0 1-1v-1.401A2.999 2.999 0 0 0 12 8a3 3 0 0 0-1.5 5.599V15a1 1 0 0 0 1 1Z" />
-                      </g>
-                    </svg><span>Autentikasi</span>
-                  </button>
-                </li>
-                <li class="sidebar__item">
-                  <button type="button" class="sidebar__button" aria-controls="settingsTabs"
-                          data-stisla-tabs-value="mail" <?= $activeTab === 'mail' ? 'aria-current="page"' : '' ?>>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-                      <g fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12s0 5.657-1.172 6.828S17.771 20 14 20h-4c-3.771 0-5.657 0-6.828-1.172S2 15.771 2 12Z" />
-                        <path stroke-linecap="round" d="m6 8l2.159 1.8c1.837 1.53 2.755 2.295 3.841 2.295s2.005-.765 3.841-2.296L18 8" />
-                      </g>
-                    </svg><span>Email</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </aside>
-    </div>
+  <div class="flex flex-col gap-4">
+    <nav class="w-full overflow-x-auto" aria-label="Bagian pengaturan">
+      <div class="btn-group" role="group" data-group="settings-tabs" aria-label="Pilih bagian pengaturan">
+        <button type="button" class="btn btn-outline <?= $activeTab === 'general' ? 'active' : '' ?>" aria-controls="settingsTabs" aria-pressed="<?= $activeTab === 'general' ? 'true' : 'false' ?>" data-stisla-tabs-value="general">Umum</button>
+        <button type="button" class="btn btn-outline <?= $activeTab === 'appearance' ? 'active' : '' ?>" aria-controls="settingsTabs" aria-pressed="<?= $activeTab === 'appearance' ? 'true' : 'false' ?>" data-stisla-tabs-value="appearance">Tampilan</button>
+        <button type="button" class="btn btn-outline <?= $activeTab === 'auth' ? 'active' : '' ?>" aria-controls="settingsTabs" aria-pressed="<?= $activeTab === 'auth' ? 'true' : 'false' ?>" data-stisla-tabs-value="auth">Autentikasi</button>
+        <button type="button" class="btn btn-outline <?= $activeTab === 'mail' ? 'active' : '' ?>" aria-controls="settingsTabs" aria-pressed="<?= $activeTab === 'mail' ? 'true' : 'false' ?>" data-stisla-tabs-value="mail">Email</button>
+      </div>
+    </nav>
 
-    <div class="col-span-12 lg:col-span-9">
+    <div class="w-full">
       <div class="tabs" id="settingsTabs" data-stisla-tabs>
 
         <!-- ======================== TAB: UMUM ======================== -->
         <div class="tabs__panel" data-value="general" data-state="<?= $activeTab === 'general' ? 'active' : 'inactive' ?>">
           <div class="flex flex-col gap-6">
-            <section class="flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h2 class="page__section-title">Pengaturan Umum</h2>
-                <p class="page__section-description">Nama aplikasi, deskripsi, dan informasi dasar.</p>
-              </div>
+            <section>
               <form action="<?= base_url('admin/settings/update/general') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="card">
-                  <div class="card__body">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">Pengaturan Umum</div>
+                      <div class="card-subtitle">Nama aplikasi, deskripsi, dan informasi dasar.</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
                     <div class="grid grid-cols-12 gap-4">
                       <div class="col-span-12 sm:col-span-6">
                         <div class="field">
@@ -119,7 +74,7 @@ $s = function (string $key) use ($settings) {
                       </div>
                     </div>
                     <div class="flex justify-end mt-4">
-                      <button type="submit" class="button button--primary">
+                      <button type="submit" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M17 21H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h6l7 7v7a4 4 0 0 1-4 4z" /><path fill="none" stroke="currentColor" stroke-width="1.5" d="M13 3v4a2 2 0 0 0 2 2h4" /></svg>
                         Simpan
                       </button>
@@ -129,15 +84,17 @@ $s = function (string $key) use ($settings) {
               </form>
             </section>
 
-            <section class="flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h2 class="page__section-title">Branding</h2>
-                <p class="page__section-description">Logo dan favicon aplikasi.</p>
-              </div>
+            <section>
               <form action="<?= base_url('admin/settings/update/branding') ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="card">
-                  <div class="card__body">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">Branding</div>
+                      <div class="card-subtitle">Logo dan favicon aplikasi.</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
                     <div class="grid grid-cols-12 gap-4">
                       <div class="col-span-12 sm:col-span-6">
                         <div class="field">
@@ -179,7 +136,7 @@ $s = function (string $key) use ($settings) {
                       </div>
                     </div>
                     <div class="flex justify-end mt-4">
-                      <button type="submit" class="button button--primary">Upload Branding</button>
+                      <button type="submit" class="btn btn-primary">Upload Branding</button>
                     </div>
                   </div>
                 </div>
@@ -191,7 +148,7 @@ $s = function (string $key) use ($settings) {
                     onsubmit="return confirm('Reset pengaturan Umum & Branding ke default?')">
                 <?= csrf_field() ?>
                 <input type="hidden" name="tab" value="general">
-                <button type="submit" class="button button--outline button--danger button--sm">Reset ke Default</button>
+                <button type="submit" class="btn btn-danger btn-sm">Reset ke Default</button>
               </form>
             </section>
           </div>
@@ -200,15 +157,17 @@ $s = function (string $key) use ($settings) {
         <!-- ======================== TAB: TAMPILAN ======================== -->
         <div class="tabs__panel" data-value="appearance" data-state="<?= $activeTab === 'appearance' ? 'active' : 'inactive' ?>">
           <div class="flex flex-col gap-6">
-            <section class="flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h2 class="page__section-title">Warna Tema</h2>
-                <p class="page__section-description">Kustomisasi dua warna gradient untuk latar auth aside.</p>
-              </div>
+            <section>
               <form action="<?= base_url('admin/settings/update/appearance') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="card">
-                  <div class="card__body">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">Warna Tema</div>
+                      <div class="card-subtitle">Kustomisasi dua warna gradient untuk latar auth aside.</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
                     <div class="grid grid-cols-12 gap-4">
                       <div class="col-span-12 sm:col-span-6">
                         <div class="field">
@@ -256,7 +215,7 @@ $s = function (string $key) use ($settings) {
                     </div>
 
                     <div class="flex justify-end mt-4">
-                      <button type="submit" class="button button--primary">Simpan</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -268,7 +227,7 @@ $s = function (string $key) use ($settings) {
                     onsubmit="return confirm('Reset pengaturan Tampilan ke default?')">
                 <?= csrf_field() ?>
                 <input type="hidden" name="tab" value="appearance">
-                <button type="submit" class="button button--outline button--danger button--sm">Reset ke Default</button>
+                <button type="submit" class="btn btn-danger btn-sm">Reset ke Default</button>
               </form>
             </section>
           </div>
@@ -277,15 +236,17 @@ $s = function (string $key) use ($settings) {
         <!-- ======================== TAB: AUTENTIKASI ======================== -->
         <div class="tabs__panel" data-value="auth" data-state="<?= $activeTab === 'auth' ? 'active' : 'inactive' ?>">
           <div class="flex flex-col gap-6">
-            <section class="flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h2 class="page__section-title">Autentikasi & Registrasi</h2>
-                <p class="page__section-description">Pengaturan role default, registrasi, dan mode pemeliharaan.</p>
-              </div>
+            <section>
               <form action="<?= base_url('admin/settings/update/auth') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="card">
-                  <div class="card__body">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">Autentikasi & Registrasi</div>
+                      <div class="card-subtitle">Pengaturan role default, registrasi, dan mode pemeliharaan.</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
                     <div class="flex flex-col gap-4">
                       <div class="field">
                         <label for="default_role" class="field__label">Default Role <span class="text-danger">*</span></label>
@@ -304,9 +265,12 @@ $s = function (string $key) use ($settings) {
                           <label class="field__label mb-0" for="allow_registration">Izinkan Registrasi</label>
                           <small class="text-muted-foreground text-xs">User baru bisa mendaftar sendiri.</small>
                         </div>
-                        <input class="switch" type="checkbox" role="switch" id="allow_registration"
+                           <label class="switch">
+                             <input type="checkbox" role="switch" id="allow_registration"
                                name="allow_registration" value="1"
                                <?= !empty($settings['Auth.allowRegistration']) ? 'checked' : '' ?>>
+                             <span class="track" aria-hidden="true"></span>
+                           </label>
                       </div>
 
                       <hr class="separator">
@@ -318,9 +282,12 @@ $s = function (string $key) use ($settings) {
                           <label class="field__label mb-0" for="maintenance_mode">Maintenance Mode</label>
                           <small class="text-muted-foreground text-xs">Hanya Super Admin yang bisa mengakses sistem.</small>
                         </div>
-                        <input class="switch" type="checkbox" role="switch" id="maintenance_mode"
+                           <label class="switch">
+                             <input type="checkbox" role="switch" id="maintenance_mode"
                                name="maintenance_mode" value="1"
                                <?= ($settings['App.maintenanceMode'] ?? '0') === '1' ? 'checked' : '' ?>>
+                             <span class="track" aria-hidden="true"></span>
+                           </label>
                       </div>
 
                       <div class="field">
@@ -330,7 +297,7 @@ $s = function (string $key) use ($settings) {
                     </div>
 
                     <div class="flex justify-end mt-4">
-                      <button type="submit" class="button button--primary">Simpan</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -342,7 +309,7 @@ $s = function (string $key) use ($settings) {
                     onsubmit="return confirm('Reset pengaturan Autentikasi ke default?')">
                 <?= csrf_field() ?>
                 <input type="hidden" name="tab" value="auth">
-                <button type="submit" class="button button--outline button--danger button--sm">Reset ke Default</button>
+                <button type="submit" class="btn btn-danger btn-sm">Reset ke Default</button>
               </form>
             </section>
           </div>
@@ -351,15 +318,17 @@ $s = function (string $key) use ($settings) {
         <!-- ======================== TAB: EMAIL ======================== -->
         <div class="tabs__panel" data-value="mail" data-state="<?= $activeTab === 'mail' ? 'active' : 'inactive' ?>">
           <div class="flex flex-col gap-6">
-            <section class="flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h2 class="page__section-title">Konfigurasi Email</h2>
-                <p class="page__section-description">Pengaturan SMTP dan identitas pengirim.</p>
-              </div>
+            <section>
               <form action="<?= base_url('admin/settings/update/mail') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="card">
-                  <div class="card__body">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">Konfigurasi Email</div>
+                      <div class="card-subtitle">Pengaturan SMTP dan identitas pengirim.</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
                     <div class="flex flex-col gap-4">
                       <div class="field">
                         <label for="mail_protocol" class="field__label">Protokol <span class="text-danger">*</span></label>
@@ -443,11 +412,11 @@ $s = function (string $key) use ($settings) {
                     </div>
 
                     <div class="flex justify-between items-center mt-4">
-                      <button type="button" class="button button--outline button--info button--sm" onclick="openTestEmail()">
+                      <button type="button" class="btn btn-outline btn-sm" onclick="openTestEmail()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12s0 5.657-1.172 6.828S17.771 20 14 20h-4c-3.771 0-5.657 0-6.828-1.172S2 15.771 2 12Z" /><path stroke-linecap="round" d="m6 8l2.159 1.8c1.837 1.53 2.755 2.295 3.841 2.295s2.005-.765 3.841-2.296L18 8" /></g></svg>
                         Test Email
                       </button>
-                      <button type="submit" class="button button--primary">Simpan</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -459,7 +428,7 @@ $s = function (string $key) use ($settings) {
                     onsubmit="return confirm('Reset pengaturan Email ke default?')">
                 <?= csrf_field() ?>
                 <input type="hidden" name="tab" value="mail">
-                <button type="submit" class="button button--outline button--danger button--sm">Reset ke Default</button>
+                <button type="submit" class="btn btn-danger btn-sm">Reset ke Default</button>
               </form>
             </section>
           </div>
@@ -504,14 +473,57 @@ $s = function (string $key) use ($settings) {
         </div>
       </div>
       <div class="dialog__footer">
-        <button type="button" class="button button--outline button--neutral" data-stisla-dialog-dismiss>Batal</button>
-        <button type="button" class="button button--primary" id="btnSendTestEmail">Kirim</button>
+        <button type="button" class="btn btn-outline" data-stisla-dialog-dismiss>Batal</button>
+        <button type="button" class="btn btn-primary" id="btnSendTestEmail">Kirim</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+  (function() {
+    var tabs = document.getElementById('settingsTabs');
+    if (!tabs) return;
+
+    var buttons = document.querySelectorAll('[data-stisla-tabs-value][aria-controls="settingsTabs"]');
+    var panels = tabs.querySelectorAll('.tabs__panel[data-value]');
+
+    function activateTab(value) {
+      var selectedButton = Array.prototype.find.call(buttons, function(button) {
+        return button.dataset.stislaTabsValue === value;
+      });
+      if (!selectedButton) selectedButton = buttons[0];
+      if (!selectedButton) return;
+
+      value = selectedButton.dataset.stislaTabsValue;
+      buttons.forEach(function(button) {
+        var isSelected = button === selectedButton;
+        button.classList.toggle('active', isSelected);
+        button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+      });
+      panels.forEach(function(panel) {
+        panel.dataset.state = panel.dataset.value === value ? 'active' : 'inactive';
+      });
+    }
+
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var value = button.dataset.stislaTabsValue;
+        activateTab(value);
+
+        var url = new URL(window.location.href);
+        url.searchParams.set('tab', value);
+        window.history.pushState({ tab: value }, '', url);
+      });
+    });
+
+    window.addEventListener('popstate', function() {
+      activateTab(new URL(window.location.href).searchParams.get('tab'));
+    });
+
+    activateTab(new URL(window.location.href).searchParams.get('tab') || <?= json_encode($activeTab) ?>);
+  })();
+
   function previewImage(input, previewId) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

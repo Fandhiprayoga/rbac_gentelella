@@ -1,9 +1,12 @@
 <div class="page__section">
   <div class="card" style="max-width: 720px; margin: 0 auto;">
-    <div class="card__header">
-      <span class="card__title">Edit User: <?= esc($user_edit->username) ?></span>
+    <div class="card-header">
+      <div>
+        <div class="card-title">Edit User: <?= esc($user_edit->username) ?></div>
+        <div class="card-subtitle">Perbarui informasi akun dan role pengguna.</div>
+      </div>
     </div>
-    <div class="card__body">
+    <div class="card-body">
       <form action="<?= base_url('admin/users/update/' . $user_edit->id) ?>" method="post" class="flex flex-col gap-4">
         <?= csrf_field() ?>
 
@@ -50,8 +53,8 @@
         <?php endif; ?>
 
         <div class="flex justify-end gap-2 pt-2">
-          <a href="<?= base_url('admin/users') ?>" class="button button--outline button--neutral">Batal</a>
-          <button type="submit" class="button button--primary">
+          <a href="<?= base_url('admin/users') ?>" class="btn btn-outline">Batal</a>
+          <button type="submit" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m16.475 5.408l2.117 2.117m-.756-3.482L12.109 9.77a2.1 2.1 0 0 0-.58 1.082L11 13l2.148-.53c.408-.1.787-.3 1.083-.579l5.727-5.727a1.85 1.85 0 1 0-2.617-2.617" />
             </svg>

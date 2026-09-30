@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/auth') ?>
+<?= $this->extend('layouts/auth-gentelella') ?>
 
 <?= $this->section('auth_pitch_title') ?>
 Tautan masuk <span>segera tersedia</span> <span>untuk digunakan.</span>

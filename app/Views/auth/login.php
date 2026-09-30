@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/auth') ?>
+<?= $this->extend('layouts/auth-gentelella') ?>
 
 <?= $this->section('auth_pitch_title') ?>
 Masuk dan <span>lanjutkan aktivitas</span> <span>secara terarah.</span>
