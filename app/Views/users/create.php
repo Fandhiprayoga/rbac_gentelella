@@ -7,48 +7,37 @@
       </div>
     </div>
     <div class="card-body">
-      <form action="<?= base_url('admin/users/store') ?>" method="post" class="flex flex-col gap-4">
+      <form action="<?= base_url('admin/users/store') ?>" method="post">
         <?= csrf_field() ?>
 
-        <div class="field">
-          <label for="username" class="field__label">Username <span class="text-danger">*</span></label>
-          <div class="input-group">
-            <input type="text" class="input" id="username" name="username" value="<?= old('username') ?>" required>
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="username">Username <span class="required">*</span></label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="e.g. johndoe" value="<?= old('username') ?>" required>
         </div>
 
-        <div class="field">
-          <label for="email" class="field__label">Email <span class="text-danger">*</span></label>
-          <div class="input-group">
-            <input type="email" class="input" id="email" name="email" value="<?= old('email') ?>" required>
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email <span class="required">*</span></label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="nama@example.com" value="<?= old('email') ?>" required>
         </div>
 
-        <div class="field">
-          <label for="password" class="field__label">Password <span class="text-danger">*</span></label>
-          <div class="input-group">
-            <input type="password" class="input" id="password" name="password" required>
-          </div>
-          <small class="text-muted-foreground text-xs">Minimal 8 karakter</small>
+        <div class="form-group">
+          <label class="form-label" for="password">Password <span class="required">*</span></label>
+          <input type="password" class="form-control" id="password" name="password" required>
+          <div class="form-help">Minimal 8 karakter.</div>
         </div>
 
-        <div class="field">
-          <label class="field__label">Role <span class="text-danger">*</span> <small class="text-muted-foreground">(bisa pilih lebih dari satu)</small></label>
-          <div class="flex flex-col gap-2 mt-1">
-            <?php foreach ($groups as $key => $group): ?>
-              <div class="field__item">
-                <input class="checkbox" type="checkbox" id="group-<?= $key ?>"
-                       name="groups[]" value="<?= $key ?>"
-                       <?= is_array(old('groups')) && in_array($key, old('groups')) ? 'checked' : '' ?>>
-                <label class="field__label" for="group-<?= $key ?>">
-                  <strong><?= esc($group['title']) ?></strong> — <?= esc($group['description']) ?>
-                </label>
-              </div>
-            <?php endforeach; ?>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Role <span class="required">*</span> <span class="form-help">(bisa pilih lebih dari satu)</span></label>
+          <?php foreach ($groups as $key => $group): ?>
+            <label class="form-check">
+              <input type="checkbox" name="groups[]" value="<?= $key ?>"
+                     <?= is_array(old('groups')) && in_array($key, old('groups')) ? 'checked' : '' ?>>
+              <span><strong><?= esc($group['title']) ?></strong> — <?= esc($group['description']) ?></span>
+            </label>
+          <?php endforeach; ?>
         </div>
 
-        <div class="flex justify-end gap-2 pt-2">
+        <div class="form-actions right">
           <a href="<?= base_url('admin/users') ?>" class="btn btn-outline">Batal</a>
           <button type="submit" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
