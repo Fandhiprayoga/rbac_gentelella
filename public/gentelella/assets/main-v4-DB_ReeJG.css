@@ -818,12 +818,15 @@ a:hover {
 
 .main {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     margin-inline-start: var(--sidebar-w);
     padding-top: 56px;
     transition: margin-left .22s cubic-bezier(.2, 0, 0, 1)
 }
 
 .page-wrapper {
+    flex: 1;
     padding: 20px 24px 40px
 }
 
