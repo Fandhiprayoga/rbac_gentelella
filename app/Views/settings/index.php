@@ -8,6 +8,35 @@ $s = function (string $key) use ($settings) {
 };
 ?>
 
+<style>
+  .brand-preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 72px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-surface-2);
+  }
+  .brand-preview img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .brand-preview--favicon img {
+    max-height: 40px;
+    max-width: 40px;
+  }
+  .brand-preview .badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+</style>
+
 <div class="page__section">
   <div class="flex flex-col gap-4">
     <nav class="w-full overflow-x-auto" aria-label="Bagian pengaturan">
@@ -103,11 +132,10 @@ $s = function (string $key) use ($settings) {
                             $currentLogo = $settings['App.siteLogo'] ?? '';
                             $logoUrl = ! empty($currentLogo) ? base_url($currentLogo) : base_url('assets/img/stisla-fill.svg');
                           ?>
-                          <div class="mb-2">
-                            <img src="<?= $logoUrl ?>" alt="Current Logo" id="logoPreview"
-                                 style="max-height: 60px; border: 1px solid var(--color-border); padding: 4px; border-radius: 6px; background: var(--color-surface-raised);">
+                          <div class="brand-preview">
+                            <img src="<?= $logoUrl ?>" alt="Current Logo" id="logoPreview">
                             <?php if (empty($currentLogo)): ?>
-                              <span class="badge badge--soft badge--secondary ml-1">Default</span>
+                              <span class="badge badge--soft badge--secondary">Default</span>
                             <?php endif; ?>
                           </div>
                           <input type="file" class="input" id="site_logo" name="site_logo" accept="image/*"
@@ -122,11 +150,10 @@ $s = function (string $key) use ($settings) {
                             $currentFavicon = $settings['App.siteFavicon'] ?? '';
                             $faviconUrl = ! empty($currentFavicon) ? base_url($currentFavicon) : base_url('assets/img/stisla-fill.svg');
                           ?>
-                          <div class="mb-2">
-                            <img src="<?= $faviconUrl ?>" alt="Current Favicon" id="faviconPreview"
-                                 style="max-height: 40px; max-width: 40px; border: 1px solid var(--color-border); padding: 4px; border-radius: 4px; background: var(--color-surface-raised);">
+                          <div class="brand-preview brand-preview--favicon">
+                            <img src="<?= $faviconUrl ?>" alt="Current Favicon" id="faviconPreview">
                             <?php if (empty($currentFavicon)): ?>
-                              <span class="badge badge--soft badge--secondary ml-1">Default</span>
+                              <span class="badge badge--soft badge--secondary">Default</span>
                             <?php endif; ?>
                           </div>
                           <input type="file" class="input" id="site_favicon" name="site_favicon" accept="image/*,.ico"
