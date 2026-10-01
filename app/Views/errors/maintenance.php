@@ -1,16 +1,8 @@
-<?= $this->extend('layouts/auth') ?>
-
-<?= $this->section('auth_pitch_title') ?>
-Layanan sedang <span>dalam pemeliharaan</span> <span>terjadwal.</span>
-<?= $this->endSection() ?>
-
-<?= $this->section('auth_pitch_lede') ?>
-Kami sedang meningkatkan kualitas sistem agar layanan kembali tersedia dengan performa yang lebih optimal.
-<?= $this->endSection() ?>
+<?= $this->extend('layouts/auth-gentelella') ?>
 
 <?= $this->section('content') ?>
-<div class="auth__form auth__maintenance">
-  <div class="auth__maintenance-icon" aria-hidden="true">
+<div class="auth__form" style="text-align:center">
+  <div style="display:inline-flex;align-items:center;justify-content:center;color:var(--color-danger,#ef4444);margin-bottom:16px" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" width="4rem" height="4rem" viewBox="0 0 24 24">
       <g fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M3.464 20.536C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.714 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464C2 4.93 2 7.286 2 12s0 7.071 1.464 8.536" />
@@ -20,27 +12,25 @@ Kami sedang meningkatkan kualitas sistem agar layanan kembali tersedia dengan pe
     </svg>
   </div>
 
-  <div class="auth__maintenance-copy">
-    <h2 class="text-lg font-semibold">Layanan Sedang Dalam Pemeliharaan</h2>
-    <p class="text-muted-foreground">
-      <?= esc(setting('App.maintenanceMsg') ?? 'Sistem sedang dalam pemeliharaan. Silakan coba beberapa saat lagi.') ?>
-    </p>
-    <p class="text-muted-foreground text-xs">
-      Kami akan segera kembali. Terima kasih atas kesabaran Anda.
-    </p>
-  </div>
+  <h2 class="auth-title">Layanan Sedang Dalam Pemeliharaan</h2>
+  <p class="auth-subtitle">
+    <?= esc(setting('App.maintenanceMsg') ?? 'Sistem sedang dalam pemeliharaan. Silakan coba beberapa saat lagi.') ?>
+  </p>
+  <p class="auth-subtitle" style="margin-bottom:24px">
+    Kami akan segera kembali. Terima kasih atas kesabaran Anda.
+  </p>
 
   <?php if (auth()->loggedIn()): ?>
-    <a href="<?= base_url('logout') ?>" class="button button--outline button--danger w-full">
+    <a href="<?= base_url('logout') ?>" class="btn btn-outline" style="width:100%;justify-content:center">
       Keluar
     </a>
   <?php else: ?>
-    <a href="<?= base_url('login') ?>" class="button button--primary w-full">
+    <a href="<?= base_url('login') ?>" class="btn btn-primary" style="width:100%;justify-content:center">
       Masuk sebagai Administrator
     </a>
   <?php endif; ?>
 
-  <p class="auth__maintenance-meta text-muted-foreground text-xs">
+  <p class="auth-footer" style="margin-top:16px">
     <?= esc(setting('App.siteName') ?? 'CI4 Shield RBAC') ?> - v<?= esc(setting('App.siteVersion') ?? '1.0.0') ?>
   </p>
 </div>

@@ -6,7 +6,7 @@ $siteNameShort = setting('App.siteNameShort') ?? 'C4';
 $logo = setting('App.siteLogo');
 $logoUrl = ! empty($logo) ? base_url($logo) : '';
 $favicon = setting('App.siteFavicon');
-$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('gentelella/images/favicon.svg');
+$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('assets/img/stisla-fill.svg');
 $currentUrl = uri_string();
 $isCurrent = static fn (string $path): bool => $currentUrl === $path || str_starts_with($currentUrl, $path . '/');
 $themePrimary = setting('App.themePrimary') ?? '#1ABB9C';

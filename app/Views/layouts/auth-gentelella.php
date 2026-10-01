@@ -1,9 +1,9 @@
 <?php
 $siteName = setting('App.siteName') ?? 'CI4 Shield RBAC';
 $logo = setting('App.siteLogo');
-$logoUrl = ! empty($logo) ? base_url($logo) : base_url('gentelella/images/logo-icon.svg');
+$logoUrl = ! empty($logo) ? base_url($logo) : base_url('assets/img/stisla-fill.svg');
 $favicon = setting('App.siteFavicon');
-$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('gentelella/images/favicon.svg');
+$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('assets/img/stisla-fill.svg');
 $themePrimary = setting('App.themePrimary') ?? '#1ABB9C';
 $themePrimary = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $themePrimary) ? $themePrimary : '#1ABB9C';
 $themeRadius = max(0, min(16, (int) (setting('App.themeRadius') ?? 6)));
