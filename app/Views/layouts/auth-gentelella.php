@@ -1,7 +1,9 @@
 <?php
-$siteName = setting('App.siteName') ?? 'Gentelella';
+$siteName = setting('App.siteName') ?? 'CI4 Shield RBAC';
 $logo = setting('App.siteLogo');
 $logoUrl = ! empty($logo) ? base_url($logo) : base_url('gentelella/images/logo-icon.svg');
+$favicon = setting('App.siteFavicon');
+$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('gentelella/images/favicon.svg');
 $themePrimary = setting('App.themePrimary') ?? '#1ABB9C';
 $themePrimary = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $themePrimary) ? $themePrimary : '#1ABB9C';
 $themeRadius = max(0, min(16, (int) (setting('App.themeRadius') ?? 6)));
@@ -15,7 +17,7 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= esc($title ?? 'Autentikasi') ?> | <?= esc($siteName) ?></title>
-  <link rel="icon" href="<?= base_url('gentelella/images/favicon.svg') ?>" type="image/svg+xml">
+  <link rel="icon" href="<?= esc($faviconUrl, 'attr') ?>" type="image/x-icon">
   <script>
     (function () {
       try {

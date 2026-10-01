@@ -1,7 +1,12 @@
 <?php
 $currentUser = auth()->user();
 $userGroups = $currentUser->getGroups();
-$siteName = setting('App.siteName') ?? 'Gentelella';
+$siteName = setting('App.siteName') ?? 'CI4 Shield RBAC';
+$siteNameShort = setting('App.siteNameShort') ?? 'C4';
+$logo = setting('App.siteLogo');
+$logoUrl = ! empty($logo) ? base_url($logo) : '';
+$favicon = setting('App.siteFavicon');
+$faviconUrl = ! empty($favicon) ? base_url($favicon) : base_url('gentelella/images/favicon.svg');
 $currentUrl = uri_string();
 $isCurrent = static fn (string $path): bool => $currentUrl === $path || str_starts_with($currentUrl, $path . '/');
 $themePrimary = setting('App.themePrimary') ?? '#1ABB9C';
@@ -23,7 +28,7 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= esc($title ?? 'Dashboard') ?> | <?= esc($siteName) ?></title>
-  <link rel="icon" href="<?= base_url('gentelella/images/favicon.svg') ?>" type="image/svg+xml">
+  <link rel="icon" href="<?= esc($faviconUrl, 'attr') ?>" type="image/x-icon">
   <script>
     (function () {
       try {
@@ -52,6 +57,12 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
       --font-size: <?= $themeFontSize / 16 ?>rem;
     }
     :root[data-theme="dark"] { --primary-lt: color-mix(in srgb, var(--primary) 14%, transparent); }
+    .sidebar-brand img.brand-icon {
+      object-fit: contain;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+    }
   </style>
 </head>
 <body data-shell="admin" data-page="<?= esc($currentUrl === '' ? 'dashboard' : str_replace('/', '-', $currentUrl), 'attr') ?>" data-breadcrumb="Home > <?= esc($page_title ?? 'Dashboard', 'attr') ?>">
@@ -59,7 +70,11 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
 
   <aside class="sidebar" id="sidebar" aria-label="Navigasi utama">
     <div class="sidebar-brand">
-      <div class="brand-icon">G</div>
+      <?php if (! empty($logoUrl)): ?>
+      <img class="brand-icon" src="<?= esc($logoUrl, 'attr') ?>" alt="<?= esc($siteName) ?>">
+      <?php else: ?>
+      <div class="brand-icon"><?= esc(! empty($siteNameShort) ? strtoupper(substr($siteNameShort, 0, 1)) : strtoupper(substr($siteName, 0, 1))) ?></div>
+      <?php endif; ?>
       <div class="brand-name"><?= esc($siteName) ?></div>
     </div>
     <nav class="sidebar-nav">
@@ -200,7 +215,7 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
       <?= $content ?? '' ?>
     </div>
     <footer class="footer">
-      <span><?= esc(setting('App.siteFooter') ?? $siteName) ?></span>
+      <span><?= esc(setting('App.siteFooter') ?? 'CI4 Shield RBAC Boilerplate') ?></span>
       <span><?= date('Y') ?></span>
     </footer>
   </main>
