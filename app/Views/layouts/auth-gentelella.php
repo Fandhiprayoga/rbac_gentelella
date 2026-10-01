@@ -47,7 +47,13 @@ $authAsideEnd = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $authAsideEnd) ? $aut
       --font-size: <?= $themeFontSize / 16 ?>rem;
     }
     :root[data-theme="dark"] { --primary-lt: color-mix(in srgb, var(--primary) 14%, transparent); }
-    .auth-page { background: linear-gradient(160deg, <?= esc($authAsideStart) ?>, <?= esc($authAsideEnd) ?>); }
+    .auth-page { background: var(--body-bg); }
+    .auth__form .form-group { margin-bottom: 16px; }
+    .auth__form .input-group .form-control { padding-inline-end: 40px; }
+    .auth__form .input-group [data-password-toggle] { position: absolute; inset-inline-end: 8px; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--text-muted); cursor: pointer; display: flex; padding: 4px; border-radius: 6px; }
+    .auth__form .input-group [data-password-toggle]:hover { color: var(--text); background: var(--bg-surface-secondary); }
+    .auth__form .form-check { margin: 4px 0 8px; }
+    .auth__form .btn { width: 100%; justify-content: center; }
   </style>
 </head>
 <body data-shell="auth" data-page="auth">
