@@ -353,6 +353,10 @@ a:hover {
     line-height: 1.6
 }
 
+.badge {
+    padding: 2px 8px
+}
+
 .badge-red {
     color: #f87171;
     background: #d6393926

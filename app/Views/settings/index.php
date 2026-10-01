@@ -271,66 +271,6 @@ $s = function (string $key) use ($settings) {
                   </div>
                 </div>
 
-                <div class="card">
-                  <div class="card-header">
-                    <div>
-                      <div class="card-title">Latar halaman login</div>
-                      <div class="card-subtitle">Dua warna gradient untuk latar halaman login.</div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="grid grid-cols-12 gap-4">
-                      <div class="col-span-12 sm:col-span-6">
-                        <div class="field">
-                          <label for="auth_aside_start" class="field__label">Warna Gradient Awal <span class="text-danger">*</span></label>
-                          <div class="flex items-center gap-2">
-                            <input type="color" id="auth_aside_start_picker"
-                                   value="<?= old('auth_aside_start', $s('App.authAsideStart') ?: '#2f3f63') ?>"
-                                   style="width: 44px; height: 36px; padding: 2px; cursor: pointer; border: 1px solid var(--color-border); border-radius: 6px;"
-                                   oninput="document.getElementById('auth_aside_start').value=this.value; updatePreview()">
-                            <input type="text" class="input" id="auth_aside_start" name="auth_aside_start"
-                                   value="<?= old('auth_aside_start', $s('App.authAsideStart') ?: '#2f3f63') ?>"
-                                   pattern="^#[0-9A-Fa-f]{6}$" maxlength="7" required
-                                   oninput="document.getElementById('auth_aside_start_picker').value=this.value; updatePreview()">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-span-12 sm:col-span-6">
-                        <div class="field">
-                          <label for="auth_aside_end" class="field__label">Warna Gradient Akhir <span class="text-danger">*</span></label>
-                          <div class="flex items-center gap-2">
-                            <input type="color" id="auth_aside_end_picker"
-                                   value="<?= old('auth_aside_end', $s('App.authAsideEnd') ?: '#1b2338') ?>"
-                                   style="width: 44px; height: 36px; padding: 2px; cursor: pointer; border: 1px solid var(--color-border); border-radius: 6px;"
-                                   oninput="document.getElementById('auth_aside_end').value=this.value; updatePreview()">
-                            <input type="text" class="input" id="auth_aside_end" name="auth_aside_end"
-                                   value="<?= old('auth_aside_end', $s('App.authAsideEnd') ?: '#1b2338') ?>"
-                                   pattern="^#[0-9A-Fa-f]{6}$" maxlength="7" required
-                                   oninput="document.getElementById('auth_aside_end_picker').value=this.value; updatePreview()">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Live Preview -->
-                    <div class="mt-4 p-3 rounded" style="background: var(--color-surface-raised); border: 1px solid var(--color-border); max-width: 400px;">
-                      <div id="preview-auth-aside"
-                           style="min-height: 140px; border-radius: 8px; padding: 12px; color: #fff; background: linear-gradient(160deg, <?= $s('App.authAsideStart') ?: '#2f3f63' ?> 0%, <?= $s('App.authAsideEnd') ?: '#1b2338' ?> 55%);">
-                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-                          <div style="width:28px; height:28px; border-radius:6px; background: rgba(255,255,255,0.16);"></div>
-                          <div style="font-size:11px; font-weight:600;">Brand</div>
-                        </div>
-                        <div style="font-size:16px; line-height:1.2; font-weight:300; margin-bottom:8px;">Akses aman,<br>proses lebih tertata.</div>
-                        <div style="font-size:11px; opacity:0.75;">Pratinjau latar gradient halaman login.</div>
-                      </div>
-                    </div>
-
-                    <div class="flex justify-end mt-4">
-                      <button type="submit" class="btn btn-primary">Simpan tampilan</button>
-                    </div>
-
-                  </div>
-                </div>
               </form>
             </section>
 
@@ -644,15 +584,6 @@ $s = function (string $key) use ($settings) {
     }
   }
 
-  function updatePreview() {
-    var start = document.getElementById('auth_aside_start') ? document.getElementById('auth_aside_start').value : '#2f3f63';
-    var end = document.getElementById('auth_aside_end') ? document.getElementById('auth_aside_end').value : '#1b2338';
-    var preview = document.getElementById('preview-auth-aside');
-    if (preview) {
-      preview.style.background = 'linear-gradient(160deg, ' + start + ' 0%, ' + end + ' 55%)';
-    }
-  }
-
   function toggleSmtp() {
     var proto = document.getElementById('mail_protocol').value;
     var smtp = document.getElementById('smtp-settings');
@@ -790,7 +721,7 @@ $s = function (string $key) use ($settings) {
       input.addEventListener('input', refreshTheme);
       input.addEventListener('change', refreshTheme);
     });
-    form.addEventListener('reset', function () { requestAnimationFrame(function () { refreshTheme(); updatePreview(); }); });
+    form.addEventListener('reset', function () { requestAnimationFrame(function () { refreshTheme(); }); });
     form.addEventListener('submit', function () {
       var mode = form.querySelector('[name="theme_mode"]:checked').value;
       try {

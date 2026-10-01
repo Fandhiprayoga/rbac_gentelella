@@ -8,10 +8,6 @@ $themeRadius = max(0, min(16, (int) (setting('App.themeRadius') ?? 6)));
 $themeFontSize = max(13, min(16, (float) (setting('App.themeFontSize') ?? 14)));
 $themeMode = setting('App.themeMode') ?? 'system';
 $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMode : 'system';
-$authAsideStart = setting('App.authAsideStart') ?? '#2f3f63';
-$authAsideStart = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $authAsideStart) ? $authAsideStart : '#2f3f63';
-$authAsideEnd = setting('App.authAsideEnd') ?? '#1b2338';
-$authAsideEnd = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $authAsideEnd) ? $authAsideEnd : '#1b2338';
 ?>
 <!doctype html>
 <html lang="id">

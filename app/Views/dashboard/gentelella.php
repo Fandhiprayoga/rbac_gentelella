@@ -17,7 +17,6 @@ $groupTitles = array_map(
       <h2>Selamat datang, <?= esc($user->username) ?></h2>
       <p>Semua yang Anda perlukan untuk mengelola akun dan akses ada di satu tempat.</p>
     </div>
-    <span class="status status-green"><span class="dashboard-status-dot" aria-hidden="true"></span>Sesi aktif</span>
   </section>
 
   <section class="row col-4 dashboard-kpis" aria-label="Ringkasan sistem">

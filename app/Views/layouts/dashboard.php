@@ -147,9 +147,11 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
         <svg class="theme-icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
         <svg class="theme-icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
       </button>
-      <a class="tb-btn" href="<?= base_url('profile') ?>" aria-label="Profil <?= esc($currentUser->username ?? 'Pengguna', 'attr') ?>">
-        <span class="tb-avatar"><?= esc(strtoupper(substr($currentUser->username ?? 'U', 0, 1))) ?></span>
-      </a>
+      <button class="tb-avatar" type="button" data-account-menu
+              aria-haspopup="menu" aria-expanded="false"
+              aria-label="Menu akun <?= esc($currentUser->username ?? 'Pengguna', 'attr') ?>">
+        <?= esc(strtoupper(substr($currentUser->username ?? 'U', 0, 1))) ?>
+      </button>
     </div>
   </header>
 
@@ -217,6 +219,105 @@ $themeMode = in_array($themeMode, ['system', 'light', 'dark'], true) ? $themeMod
       </div>
     </div>
   </div>
+  <?php
+    $accountMenu = [];
+    $accountMenu[] = ['label' => 'Profil Saya', 'href' => base_url('profile')];
+    if (activeGroupCan('admin.settings')) {
+      $accountMenu[] = ['label' => 'Pengaturan', 'href' => base_url('admin/settings')];
+    }
+  ?>
+  <script>
+    (function () {
+      var trigger = document.querySelector('[data-account-menu]');
+      var logoutTrigger = document.getElementById('logoutTrigger');
+      var items = <?= json_encode($accountMenu, JSON_UNESCAPED_SLASHES) ?>;
+
+      function buildMenu() {
+        var popover = document.createElement('div');
+        popover.className = 'menu-popover';
+        popover.setAttribute('role', 'menu');
+
+        items.forEach(function (item) {
+          var el = document.createElement('a');
+          el.className = 'menu-item';
+          el.setAttribute('role', 'menuitem');
+          el.style.display = 'block';
+          el.style.textDecoration = 'none';
+          el.href = item.href;
+          el.textContent = item.label;
+          popover.appendChild(el);
+        });
+
+        var separator = document.createElement('div');
+        separator.className = 'menu-separator';
+        popover.appendChild(separator);
+
+        var logout = document.createElement('button');
+        logout.type = 'button';
+        logout.className = 'menu-item';
+        logout.setAttribute('role', 'menuitem');
+        logout.textContent = 'Keluar';
+        logout.addEventListener('click', function () {
+          close();
+          if (logoutTrigger) { logoutTrigger.click(); }
+        });
+        popover.appendChild(logout);
+
+        return popover;
+      }
+
+      function position(popover) {
+        popover.style.visibility = 'hidden';
+        document.body.appendChild(popover);
+        var rect = trigger.getBoundingClientRect();
+        var top = rect.bottom + 6;
+        var left = rect.right - popover.offsetWidth;
+        if (top + popover.offsetHeight > window.innerHeight - 8) {
+          top = rect.top - popover.offsetHeight - 6;
+        }
+        left = Math.max(8, Math.min(left, window.innerWidth - popover.offsetWidth - 8));
+        popover.style.top = Math.round(top) + 'px';
+        popover.style.left = Math.round(left) + 'px';
+        popover.style.visibility = '';
+      }
+
+      function close() {
+        if (menu) { menu.remove(); menu = null; }
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+
+      function open() {
+        close();
+        menu = buildMenu();
+        position(menu);
+        trigger.setAttribute('aria-expanded', 'true');
+        menu.querySelector('.menu-item').focus();
+      }
+
+      var menu = null;
+
+      if (trigger) {
+        // Capture phase: ambil alih sebelum module JS demo mengikat menu hardcoded.
+        trigger.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          if (menu) { close(); } else { open(); }
+        }, true);
+
+        document.addEventListener('click', function (event) {
+          if (menu && !menu.contains(event.target) && event.target !== trigger) { close(); }
+        }, true);
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && menu) { close(); }
+        });
+
+        window.addEventListener('resize', function () { if (menu) { close(); } });
+        window.addEventListener('scroll', function () { if (menu) { close(); } }, true);
+      }
+    })();
+  </script>
   <script>
     (function () {
       var trigger = document.getElementById('logoutTrigger');

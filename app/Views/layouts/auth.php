@@ -22,17 +22,6 @@
   <?php
     $authPitchTitle = trim($this->renderSection('auth_pitch_title'));
     $authPitchLede = trim($this->renderSection('auth_pitch_lede'));
-    $authAsideStart = setting('App.authAsideStart') ?? '#2f3f63';
-    $authAsideEnd = setting('App.authAsideEnd') ?? '#1b2338';
-
-    if (! preg_match('/^#[0-9A-Fa-f]{6}$/', (string) $authAsideStart)) {
-      $authAsideStart = '#2f3f63';
-    }
-
-    if (! preg_match('/^#[0-9A-Fa-f]{6}$/', (string) $authAsideEnd)) {
-      $authAsideEnd = '#1b2338';
-    }
-
     if ($authPitchTitle === '') {
       $authPitchTitle = 'Akses aman, <span>proses</span> <span>lebih tertata.</span>';
     }
@@ -75,7 +64,7 @@
       <?= $this->renderSection('content') ?>
     </section>
 
-    <aside class="auth__aside" style="background: linear-gradient(160deg, <?= esc($authAsideStart, 'attr') ?> 0%, <?= esc($authAsideEnd, 'attr') ?> 55%);">
+    <aside class="auth__aside" style="background: linear-gradient(160deg, #2f3f63 0%, #1b2338 55%);">
       <a href="<?= base_url() ?>" class="auth__brand">
         <span class="auth__brand-mark">
           <?php
